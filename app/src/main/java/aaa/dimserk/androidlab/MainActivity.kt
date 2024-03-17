@@ -1,7 +1,6 @@
 package aaa.dimserk.androidlab
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,26 +10,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import aaa.dimserk.androidlab.ui.theme.AndroidLabTheme
+import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import androidx.compose.material3.Button
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    //@Inject
-    //lateinit var repo: SomeRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidLabTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("repo.foo()")
+                    Greeting()
                 }
             }
         }
@@ -39,19 +40,39 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(
-    fooText: String,
     modifier: Modifier = Modifier,
     viewModel: UIViewModel = viewModel()
 ) {
-    Row {
-        Text(
-            text = viewModel.getHelloMessage(),
-            modifier = modifier
-        )
+    val scope = rememberCoroutineScope()
 
-        Text(
-            text = fooText
+    var visible by remember { mutableStateOf(false) }
+
+    if (visible) {
+        ProgressCard(
+            onDissmiss = { visible = false },
+            onCancel = { }
         )
+    }
+
+    Column {
+        Row {
+            Text(
+                text = viewModel.getHelloMessage(),
+                modifier = modifier
+            )
+        }
+
+        Button(onClick = {
+            scope.launch {
+                Log.d("TAG", "started")
+                visible = true
+                viewModel.longTask()
+                visible = false
+                Log.d("TAG", "done")
+            }
+        }) {
+            Text(text = "Push me")
+        }
     }
 }
 

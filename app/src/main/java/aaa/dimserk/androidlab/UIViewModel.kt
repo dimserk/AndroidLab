@@ -11,4 +11,7 @@ class UIViewModel : ViewModel() {
         return nativeLib.getHello()
     }
 
+    suspend fun longTask() {
+        nativeLib.longTask()
+    }
 }
