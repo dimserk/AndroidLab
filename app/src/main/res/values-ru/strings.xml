@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="start_long_task_button">Начать длительную операцию</string>
+    <string name="snackbar_massage">Snackbar сообщение</string>
+    <string name="show_snackbar">Показать snackbar</string>
+    <string name="snackbar_action_label">Выполнить</string>
+    <string name="show_action_snackbar">Показать snackbar с действием</string>
+    <string name="progress_card_text">Выполняю...</string>
+</resources>
