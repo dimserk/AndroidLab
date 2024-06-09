@@ -6,5 +6,8 @@
     <string name="snackbar_action_label">Action</string>
     <string name="show_action_snackbar">Show action snackbar</string>
     <string name="snackbars_label" translatable="false">Snackbars</string>
-    <string name="progress_card_text">Processing...</string>
+    <string name="progress_card_text">Processing…</string>
+    <string name="request_permission">Request permisson</string>
+    <string name="permission_granted">Permission has been granted</string>
+    <string name="permission_not_granted">Permission hasn`t been granted</string>
 </resources>

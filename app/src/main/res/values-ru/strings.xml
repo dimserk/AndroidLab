@@ -5,5 +5,8 @@
     <string name="show_snackbar">Показать snackbar</string>
     <string name="snackbar_action_label">Выполнить</string>
     <string name="show_action_snackbar">Показать snackbar с действием</string>
-    <string name="progress_card_text">Выполняю...</string>
+    <string name="progress_card_text">Выполняю…</string>
+    <string name="request_permission">Запросить разрешение</string>
+    <string name="permission_granted">Разрешение получено</string>
+    <string name="permission_not_granted">Разрешение не получено</string>
 </resources>
