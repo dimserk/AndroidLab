@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">AndroidLab</string>
+    <string name="app_name" translatable="false">AndroidLab</string>
+    <string name="start_long_task_button">Start long task</string>
+    <string name="snackbar_massage">Snackbar message</string>
+    <string name="show_snackbar">Show snackbar</string>
+    <string name="snackbar_action_label">Action</string>
+    <string name="show_action_snackbar">Show action snackbar</string>
+    <string name="snackbars_label" translatable="false">Snackbars</string>
+    <string name="progress_card_text">Processing...</string>
 </resources>
