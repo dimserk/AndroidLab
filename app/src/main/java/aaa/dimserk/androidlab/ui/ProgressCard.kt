@@ -1,5 +1,6 @@
-package aaa.dimserk.androidlab
+package aaa.dimserk.androidlab.ui
 
+import aaa.dimserk.androidlab.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
