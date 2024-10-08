@@ -28,13 +28,13 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = NavRoutes.MainScreen
+                        startDestination = NavRoutes.MAIN_SCREEN
                     ) {
-                        composable(route = NavRoutes.MainScreen) {
+                        composable(route = NavRoutes.MAIN_SCREEN) {
                             MainScreen()
                         }
 
-                        composable(route = NavRoutes.PinCodeScreen) {
+                        composable(route = NavRoutes.PIN_CODE_SCREEN) {
                             PinCodeScreen()
                         }
                     }

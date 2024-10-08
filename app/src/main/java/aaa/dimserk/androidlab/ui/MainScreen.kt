@@ -1,6 +1,7 @@
 package aaa.dimserk.androidlab.ui
 
 import aaa.dimserk.androidlab.Logger
+import aaa.dimserk.androidlab.NavRoutes
 import aaa.dimserk.androidlab.R
 import aaa.dimserk.androidlab.UIViewModel
 import android.Manifest
@@ -28,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -44,9 +46,10 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
-
 
 @Composable
 fun MainScreen(
@@ -57,7 +60,7 @@ fun MainScreen(
     val localContext = LocalContext.current
 
     val navHost = rememberNavController()
-    //val currentRoute = mutableStateOf(NavRoutes.)
+    val currentRoute by viewModel.currentNavRoute.observeAsState(NavRoutes.ABOUT_SCREEN)
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -74,7 +77,6 @@ fun MainScreen(
 
         mutableStateOf(text)
     }
-
 
     var requaredPermissions by remember { mutableStateOf<List<String>>(listOf()) }
 
@@ -149,137 +151,147 @@ fun MainScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         modifier = modifier,
-        bottomBar = {
-
-        }
     ) { innerPadding ->
-        Column(
-            modifier = modifier.padding(innerPadding),
-        ) {
-            Row(
-                modifier = modifier,
-            ) {
-                Text(
-                    text = viewModel.getHelloMessage(),
-                    modifier = modifier,
-                )
-            }
-
-            Button(
-                enabled = longTaskEnabled,
-                modifier = modifier,
-                onClick = {
-                    scope.launch {
-                        Logger.verbose ("Long task started")
-                        longTaskEnabled = false
-                        progressCardVisible = true
-                        viewModel.longTask()
-                        progressCardVisible = false
-                        Logger.verbose("Long task done")
-                        longTaskEnabled = true
-                    }
-                }
-            ) {
-                Text(
-                    text = stringResource(id = R.string.start_long_task_button),
-                )
-            }
-
-            Text(
-                text = stringResource(id = R.string.snackbars_label),
-                modifier = modifier,
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceAround,
-                modifier = modifier.fillMaxWidth(),
-            ) {
-                Button(
-                    modifier = modifier,
-                    onClick = {
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = localContext.getString(R.string.snackbar_massage),
-                                withDismissAction = true
-                            )
-                        }
-                    }) {
-                    Text(
-                        text = stringResource(id = R.string.show_snackbar),
+        NavHost(navController = navHost, startDestination = currentRoute) {
+            composable(route = NavRoutes.ABOUT_SCREEN) {
+                Column(
+                    modifier = modifier.padding(innerPadding),
+                ) {
+                    Row(
                         modifier = modifier,
-                    )
-                }
+                    ) {
+                        Text(
+                            text = viewModel.getHelloMessage(),
+                            modifier = modifier,
+                        )
+                    }
 
-                Button(
-                    modifier = modifier,
-                    onClick = {
-                        scope.launch {
-                            val result = snackbarHostState.showSnackbar(
-                                message = localContext.getString(R.string.snackbar_massage),
-                                actionLabel = localContext.getString(R.string.snackbar_action_label),
-                                withDismissAction = true,
-                                duration = SnackbarDuration.Long
-                            )
-
-                            when (result) {
-                                SnackbarResult.ActionPerformed -> {
-                                    Logger.verbose("Action perfomed")
-                                }
-
-                                SnackbarResult.Dismissed -> {
-                                    Logger.verbose("Action dismissed")
-                                }
+                    Button(
+                        enabled = longTaskEnabled,
+                        modifier = modifier,
+                        onClick = {
+                            scope.launch {
+                                Logger.verbose("Long task started")
+                                longTaskEnabled = false
+                                progressCardVisible = true
+                                viewModel.longTask()
+                                progressCardVisible = false
+                                Logger.verbose("Long task done")
+                                longTaskEnabled = true
                             }
                         }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.start_long_task_button),
+                        )
                     }
-                ) {
+
                     Text(
-                        text = stringResource(id = R.string.show_action_snackbar),
+                        text = stringResource(id = R.string.snackbars_label),
                         modifier = modifier,
                     )
-                }
-            }
 
-            // Permissions
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text(
-                text = permissionText,
-                modifier = modifier
-            )
-
-            Card (
-                border = BorderStroke(2.dp, Color.Black)
-            ) {
-                LazyColumn {
-                    items(requaredPermissions) { permission ->
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        modifier = modifier.fillMaxWidth(),
+                    ) {
                         Button(
                             modifier = modifier,
                             onClick = {
-                                permissionRequestLauncher.launch(permission)
+                                scope.launch {
+                                    snackbarHostState.showSnackbar(
+                                        message = localContext.getString(R.string.snackbar_massage),
+                                        withDismissAction = true
+                                    )
+                                }
+                            }) {
+                            Text(
+                                text = stringResource(id = R.string.show_snackbar),
+                                modifier = modifier,
+                            )
+                        }
+
+                        Button(
+                            modifier = modifier,
+                            onClick = {
+                                scope.launch {
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = localContext.getString(R.string.snackbar_massage),
+                                        actionLabel = localContext.getString(R.string.snackbar_action_label),
+                                        withDismissAction = true,
+                                        duration = SnackbarDuration.Long
+                                    )
+
+                                    when (result) {
+                                        SnackbarResult.ActionPerformed -> {
+                                            Logger.verbose("Action perfomed")
+                                        }
+
+                                        SnackbarResult.Dismissed -> {
+                                            Logger.verbose("Action dismissed")
+                                        }
+                                    }
+                                }
                             }
                         ) {
                             Text(
-                                text = permission,
-                                modifier = modifier
+                                text = stringResource(id = R.string.show_action_snackbar),
+                                modifier = modifier,
                             )
                         }
+                    }
+
+                    // Permissions
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = permissionText,
+                        modifier = modifier
+                    )
+
+                    Card(
+                        border = BorderStroke(2.dp, Color.Black)
+                    ) {
+                        LazyColumn {
+                            items(requaredPermissions) { permission ->
+                                Button(
+                                    modifier = modifier,
+                                    onClick = {
+                                        permissionRequestLauncher.launch(permission)
+                                    }
+                                ) {
+                                    Text(
+                                        text = permission,
+                                        modifier = modifier
+                                    )
+                                }
+                            }
+                        }
+                    }
+
+                    Button(
+                        onClick = {
+                            viewModel.changeCurrentNavRoute(NavRoutes.SETTINGS_SCREEN)
+                        }
+                    ) {
+                        Text(text = "To settings")
                     }
                 }
             }
 
-
-            /* Button(
-                modifier = modifier,
-                onClick = {
-                    permissionRequestLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+            composable(route = NavRoutes.SETTINGS_SCREEN) {
+                Column(
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    Button(
+                        onClick = {
+                            viewModel.changeCurrentNavRoute(NavRoutes.ABOUT_SCREEN)
+                        }
+                    ) {
+                        Text(text = "To about")
+                    }
                 }
-            ) {
-                Text(
-                    text = stringResource(id = R.string.request_permission),
-                    modifier = modifier
-                )
-            } */
+            }
         }
     }
 }
