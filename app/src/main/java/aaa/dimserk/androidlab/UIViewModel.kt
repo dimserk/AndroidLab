@@ -13,6 +13,8 @@ class UIViewModel : ViewModel() {
         currentNavRoute.value = newRoute
     }
 
+    val changableString = MutableLiveData("foo")
+
     private val nativeLib = NativeLib()
 
     fun getHelloMessage() = nativeLib.getHello()

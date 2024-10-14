@@ -26,6 +26,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -61,6 +62,7 @@ fun MainScreen(
 
     val navHost = rememberNavController()
     val currentRoute by viewModel.currentNavRoute.observeAsState(NavRoutes.ABOUT_SCREEN)
+    val changableString by viewModel.changableString.observeAsState("None")
 
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -275,6 +277,24 @@ fun MainScreen(
                         }
                     ) {
                         Text(text = "To settings")
+                    }
+
+                    Row {
+                        TextField(
+                            value = changableString,
+                            onValueChange = { viewModel.changableString.value = it }
+                        )
+
+                        Button(onClick = {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    message = viewModel.changableString.value ?: "none",
+                                    withDismissAction = true
+                                )
+                            }
+                        }) {
+                            Text(text = "Show from viewModel")
+                        }
                     }
                 }
             }

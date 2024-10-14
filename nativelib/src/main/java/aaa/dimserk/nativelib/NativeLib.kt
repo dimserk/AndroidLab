@@ -17,7 +17,7 @@ class NativeLib {
     suspend fun longTask() = withContext(Dispatchers.Default) {
         longTaskJNI()
 
-        if (jniReturnCode != -1)
+        if (jniReturnCode != 0)
             throw Exception("Something went wrong")
     }
 
