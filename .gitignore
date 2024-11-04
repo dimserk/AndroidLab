@@ -1,3 +1,9 @@
+# Android Studio
+/.idea/*
+!/.idea/codeStyles
+!/.idea/dictionaries/
+!/.idea/runConfigurations/
+
 *.iml
 .gradle
 /local.properties
@@ -15,3 +21,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Директория получается в результате Build -> Generate Signed Bundle/APK
+app/release
+
+# Не добавлены для примера
+# keystore.properties
+# *.jks
