@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "aaa.dimserk.nativelib"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 28
