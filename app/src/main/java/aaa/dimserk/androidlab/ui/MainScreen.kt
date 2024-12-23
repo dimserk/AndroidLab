@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -152,6 +153,30 @@ fun MainScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        bottomBar = {
+            Row(
+                horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier
+                    .padding(bottom = 25.dp)
+                    .fillMaxWidth()
+            ) {
+                OutlinedButton(
+                    onClick = {
+                        viewModel.changeCurrentNavRoute(NavRoutes.ABOUT_SCREEN)
+                    }
+                ) {
+                    Text(text = "Main")
+                }
+
+                OutlinedButton(
+                    onClick = {
+                        viewModel.changeCurrentNavRoute(NavRoutes.SETTINGS_SCREEN)
+                    }
+                ) {
+                    Text(text = "Settings")
+                }
+            }
+        },
         modifier = modifier,
     ) { innerPadding ->
         NavHost(navController = navHost, startDestination = currentRoute) {
