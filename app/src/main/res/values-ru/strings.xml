@@ -9,4 +9,6 @@
     <string name="request_permission">Запросить разрешение</string>
     <string name="permission_granted">Разрешение получено</string>
     <string name="permission_not_granted">Разрешение не получено</string>
+    <string name="main_screen_title">Основной</string>
+    <string name="settings_screen_title">Настройки</string>
 </resources>
