@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.3"
+agp = "8.8.0"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -9,12 +9,10 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.0"
 composeBom = "2025.01.01"
 lifecycleViewmodelCompose = "2.8.7"
-navigationCompose = "2.8.5"
-runtimeLivedata = "1.7.6"
-kotlinxSerializationJson = "1.8.0-RC"
-kotlinPluginSerialization = "2.1.0"
 navigationCompose = "2.8.6"
 runtimeLivedata = "1.7.7"
+kotlinxSerializationJson = "1.8.0-RC"
+kotlinPluginSerialization = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
