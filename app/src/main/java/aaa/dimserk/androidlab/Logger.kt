@@ -10,8 +10,8 @@ class Logger {
             Log.v(TAG, message)
         }
 
-        /* fun debug(message: String) {
+        fun debug(message: String) {
             Log.d(TAG, message)
-        } */
+        }
     }
 }
